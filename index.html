@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>It is a time to disco!</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<script src="js/audio.js"/>
+		<title>It is a time to disco!</title>
+	</head>
 
-<body>
-	<div style="font-family: Helvetica Neue; font-size: 100pt;">It is a time to disco!</div>
-	<div style="font-family: Helvetica Neue; font-size: 80pt;">Поехали...</div>
-</body>
-
+	<body>
+		<div style="font-family: Helvetica Neue; font-size: 80pt;">It is a time to disco!</div>
+		<input id="audio_file" type="file" accept="audio/mp3"/>
+		<button onclick="audio_player.play()">Play</button>
+		<button onclick="audio_player.pause()">Pause</button>
+		<audio id="audio_player" controls />
+	</body>
 </html>
