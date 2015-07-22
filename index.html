@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<script src="js/audio.js"/>
+		<meta charset="utf-8">
 		<title>It is a time to disco!</title>
+		<link rel="stylesheet" href="css/style.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	</head>
 
 	<body>
-		<div style="font-family: Helvetica Neue; font-size: 80pt;">It is a time to disco!</div>
+		<!--<div style="font-family: Helvetica Neue; font-size: 80pt;">It is a time to disco!</div>-->
+		<div id="dropZone">
+			Для загрузки, перетащите файл сюда.
+		</div>
 		<input id="audio_file" type="file" accept="audio/mp3"/>
-		<button onclick="audio_player.play()">Play</button>
+		<button onclick="loadSound(audio_file.value)">Play</button>
 		<button onclick="audio_player.pause()">Pause</button>
-		<audio id="audio_player" controls />
+		<audio id="audio_player"/>
+
+		<script src="js/audio.js" type="text/javascript" charset="UTF-8"></script>
 	</body>
 </html>
