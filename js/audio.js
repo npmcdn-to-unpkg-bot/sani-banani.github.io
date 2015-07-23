@@ -37,37 +37,31 @@ $(document).ready(function () {
             dropZone.addClass('error');
             return false;
         }
+        $("fileName").text(file.name);
+        audio_player.src = URL.createObjectURL(event.dataTransfer.files[0]);
+        loadSource();
     };
 });
 
-var context;
-window.addEventListener('load', init, false);
+var ctx; //audio context
+var buf; //audio buffer
+var fft; //fft audio node
+var samples = 128;
+var setup = false; //indicate if audio is set up yet
 
 function init() {
     try {
         // Fix up for prefixing
         window.AudioContext = window.AudioContext||window.webkitAudioContext;
-        context = new AudioContext();
+        ctx = new AudioContext();
+
+        setupCanvas();
     }
     catch(e) {
         console.log('Web Audio API is not supported in this browser');
     }
 }
-
-var dogBarkingBuffer = null;
-function loadSound(url) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.responseType = 'arraybuffer';
-
-    // Decode asynchronously
-    request.onload = function() {
-        context.decodeAudioData(request.response, function(buffer) {
-            dogBarkingBuffer = buffer;
-        }, onError);
-    }
-    request.send();
-}
+window.addEventListener('load', init, false);
 
 function playSound(buffer) {
     var source = context.createBufferSource(); // creates a sound source
@@ -77,15 +71,69 @@ function playSound(buffer) {
                                                // note: on older systems, may have to use deprecated noteOn(time);
 }
 
-function load(){
-    var source = context.createMediaElementSource(audio_player);
-    source.connect(context.destination);
+//load the mp3 file
+function loadFile() {
+    var req = new XMLHttpRequest();
+    req.open("GET","music.mp3",true);
+    //we can't use jquery because we need the arraybuffer type
+    req.responseType = "arraybuffer";
+    req.onload = function() {
+        //decode the loaded data
+        ctx.decodeAudioData(req.response, function(buffer) {
+            buf = buffer;
+            play();
+        });
+    };
+    req.send();
+}
+
+function loadSource(){
+    var src = ctx.createMediaElementSource(audio_player);
+    src.connect(ctx.destination);
+
+    fft = ctx.createAnalyser();
+    fft.fftSize = 128;
+
+    //connect them up into a chain
+    src.connect(fft);
+    fft.connect(ctx.destination);
+
+    //play immediately
+    //src.noteOn(0);
+    setup = true;
+}
+
+var gfx;
+function setupCanvas() {
+    var canvas = document.getElementById('canvas');
+    gfx = canvas.getContext('2d');
+    window.requestAnimationFrame = window.requestAnimationFrame||window.webkitRequestAnimationFrame;
+    requestAnimationFrame(update);
+}
+
+function update() {
+    window.requestAnimationFrame = window.requestAnimationFrame||window.webkitRequestAnimationFrame;
+    requestAnimationFrame(update);
+    if(!setup) return;
+    gfx.clearRect(0,0,800,600);
+    gfx.fillStyle = 'gray';
+    gfx.fillRect(0,0,800,600);
+
+    var data = new Uint8Array(128);
+    fft.getByteFrequencyData(data);
+    gfx.fillStyle = 'red';
+    for(var i=0; i<data.length; i++) {
+        gfx.fillRect(100+i*4,100+256-data[i]*2,3,100);
+    }
+
 }
 
 audio_file.onchange = function(){
     var files = this.files;
+    $("fileName").text(files[0].name);
     var file = URL.createObjectURL(files[0]);
     audio_player.src = file;
+    loadSource();
     //audio_player.play();
     //loadSound(file);
 };
