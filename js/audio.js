@@ -1,6 +1,17 @@
 /**
  * Created by akonovalov on 21.07.2015.
  */
+// TODO: useful page http://fourthof5.com/audio-visualisation-with-the-web-audio-api https://developer.tizen.org/community/tip-tech/advanced-web-audio-api-usage
+
+var ctx; //audio context
+var gfx;
+var buf; //audio buffer
+var fft; //fft audio node
+var samples = 128;
+var setup = false; //indicate if audio is set up yet
+var javascriptNode;
+var sourceNode;
+var analyser;
 
 $(document).ready(function () {
     var dropZone = $('#dropZone'),
@@ -23,6 +34,8 @@ $(document).ready(function () {
         return false;
     };
 
+    initContext();
+
     // Теперь нам необходимо написать обработчик события «ondrop» — это событие когда перетянутый файл опустили. В некоторых браузерах при перетягивании файлов в окно браузера они автоматически открываются, что бы такого не произошло нам нужно отменить стандартное поведение браузера. Также нам необходимо убрать класс «hover», и добавить класс «drop».
     dropZone[0].ondrop = function (event) {
         event.preventDefault();
@@ -39,17 +52,13 @@ $(document).ready(function () {
         }
         $("fileName").text(file.name);
         audio_player.src = URL.createObjectURL(event.dataTransfer.files[0]);
-        loadSource();
+
+        //loadSource();
+        initSource();
     };
 });
 
-var ctx; //audio context
-var buf; //audio buffer
-var fft; //fft audio node
-var samples = 128;
-var setup = false; //indicate if audio is set up yet
-
-function init() {
+function initContext() {
     try {
         // Fix up for prefixing
         window.AudioContext = window.AudioContext||window.webkitAudioContext;
@@ -61,7 +70,7 @@ function init() {
         console.log('Web Audio API is not supported in this browser');
     }
 }
-window.addEventListener('load', init, false);
+window.addEventListener('load', initContext, false);
 
 function playSound(buffer) {
     var source = context.createBufferSource(); // creates a sound source
@@ -87,9 +96,71 @@ function loadFile() {
     req.send();
 }
 
+function initSource(){
+    // get the context from the canvas to draw on
+    var gfx = $("#canvas").get()[0].getContext("2d");
+    // create a gradient for the fill. Note the strange
+    // offset, since the gradient is calculated based on
+    // the canvas, not the specific element we draw
+    var gradient = gfx.createLinearGradient(0,0,0,300);
+    gradient.addColorStop(1,'#000000');
+    gradient.addColorStop(0.75,'#ff0000');
+    gradient.addColorStop(0.25,'#ffff00');
+    gradient.addColorStop(0,'#ffffff');
+
+    sourceNode = ctx.createMediaElementSource(audio_player);
+    sourceNode.connect(ctx.destination);
+
+    // load the sound
+    setupAudioNodes();
+
+    // when the javascript node is called
+    // we use information from the analyzer node
+    // to draw the volume
+    javascriptNode.onaudioprocess = function() {
+        // get the average for the first channel
+        var array =  new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(array);
+        // clear the current state
+        gfx.clearRect(0, 0, 1000, 325);
+        // set the fill style
+        gfx.fillStyle=gradient;
+        drawSpectrum(array);
+    };
+
+    function drawSpectrum(array) {
+        for ( var i = 0; i < (array.length); i++ ){
+            var value = array[i];
+            gfx.fillRect(i*5,325-value,3,325);
+            //  console.log([i,value])
+        }
+    }
+}
+
+function setupAudioNodes() {
+    // setup a javascript node
+    javascriptNode = ctx.createScriptProcessor(2048, 1, 1);
+    // connect to destination, else it isn't called
+    javascriptNode.connect(ctx.destination);
+    // setup a analyzer
+    analyser = ctx.createAnalyser();
+    analyser.smoothingTimeConstant = 0.3;
+    analyser.fftSize = 512;
+    // create a buffer source node
+    sourceNode = ctx.createBufferSource();
+    sourceNode.connect(analyser);
+    analyser.connect(javascriptNode);
+    sourceNode.connect(ctx.destination);
+}
+
 function loadSource(){
     var src = ctx.createMediaElementSource(audio_player);
     src.connect(ctx.destination);
+
+    // setup a javascript node
+    javascriptNode = context.createScriptProcessor(2048, 1, 1);
+    // connect to destination, else it isn't called
+    javascriptNode.connect(context.destination);
 
     fft = ctx.createAnalyser();
     fft.fftSize = 128;
@@ -103,10 +174,19 @@ function loadSource(){
     setup = true;
 }
 
-var gfx;
 function setupCanvas() {
     var canvas = document.getElementById('canvas');
     gfx = canvas.getContext('2d');
+
+    // create a gradient for the fill. Note the strange
+    // offset, since the gradient is calculated based on
+    // the canvas, not the specific element we draw
+    var gradient = gfx.createLinearGradient(0,0,0,300);
+    gradient.addColorStop(1,'#000000');
+    gradient.addColorStop(0.75,'#ff0000');
+    gradient.addColorStop(0.25,'#ffff00');
+    gradient.addColorStop(0,'#ffffff');
+
     window.requestAnimationFrame = window.requestAnimationFrame||window.webkitRequestAnimationFrame;
     requestAnimationFrame(update);
 }
@@ -114,6 +194,7 @@ function setupCanvas() {
 function update() {
     window.requestAnimationFrame = window.requestAnimationFrame||window.webkitRequestAnimationFrame;
     requestAnimationFrame(update);
+
     if(!setup) return;
     gfx.clearRect(0,0,800,600);
     gfx.fillStyle = 'gray';
@@ -125,7 +206,6 @@ function update() {
     for(var i=0; i<data.length; i++) {
         gfx.fillRect(100+i*4,100+256-data[i]*2,3,100);
     }
-
 }
 
 audio_file.onchange = function(){
