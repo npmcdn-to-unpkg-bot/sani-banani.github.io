@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<title>It is a time to disco!</title>
 		<link rel="stylesheet" href="css/style.css">
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	</head>
 
 	<body>
-		<!--<div style="font-family: Helvetica Neue; font-size: 80pt;">It is a time to disco!</div>-->
+		<div style="font-family: Helvetica Neue; font-size: 80pt; text-align: center;">It is a time to disco!</div>
 		<div id="dropZone">
 			Для загрузки, перетащите файл сюда <br/> или
 			<div class="file_upload">
@@ -17,12 +17,14 @@
 			</div>
 		</div>
 
+        <div id="fileName" style="font-family: Helvetica Neue; font-size: 20pt; text-align: center;">Тут будет название файла</div>
 
 		<div id="playerZone">
 			<canvas id="canvas">Обновите браузер</canvas>
-			<div id="fileName"></div>
+			<div/>
 			<button onclick="audio_player.play()">Play</button>
 			<button onclick="audio_player.pause()">Pause</button>
+			<button id="stop">Stop</button>
 			<audio id="audio_player"/>
 		</div>
 		<script src="js/audio.js" type="text/javascript" charset="UTF-8"></script>
