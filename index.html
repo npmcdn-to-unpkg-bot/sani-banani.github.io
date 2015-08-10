@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>It is a time to disco!</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	</head>
 
 	<body>
@@ -12,7 +14,7 @@
 		<div id="dropZone">
 			Для загрузки, перетащите файл сюда <br/> или
 			<div class="file_upload">
-				<span class="button">Выберите файл</span>
+				<span class="button" onclick="$('#audio_file').click()">Выберите файл</span>
 				<input id="audio_file" type="file" accept="audio/mp3">
 			</div>
 		</div>
@@ -22,9 +24,19 @@
 		<div id="playerZone">
 			<canvas id="canvas">Обновите браузер</canvas>
 			<div/>
-			<button onclick="audio_player.play()">Play</button>
-			<button onclick="audio_player.pause()">Pause</button>
-			<button id="stop">Stop</button>
+
+			<a href="#" onclick="audio_player.play()" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-play"></span> Play
+			</a>
+
+			<a href="#" onclick="audio_player.pause()" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-pause"></span> Pause
+			</a>
+
+			<a href="#" id="stop" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-stop"></span> Stop
+			</a>
+
 			<audio id="audio_player"/>
 		</div>
 		<script src="js/audio.js" type="text/javascript" charset="UTF-8"></script>

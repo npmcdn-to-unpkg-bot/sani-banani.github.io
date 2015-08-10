@@ -5,7 +5,7 @@ var app = (function () {
     'use strict';
 
     var _files, _context, _source, _gainNode, _filterNode, _equalizerNodes, _analyserNode, _generationMethods, _timer, _option,
-        _init, _loadSound, _isSoundPlaying, _playSound, _generateAndPlaySound, _stopSound, _setPlaybackRate, _createRoutingGraph, _startTimer, _stopTimer, _timerFunction, _draw,
+        _init, _loadFile, _loadSound, _isSoundPlaying, _playSound, _generateAndPlaySound, _stopSound, _setPlaybackRate, _createRoutingGraph, _startTimer, _stopTimer, _timerFunction, _draw,
         _$playbackRate, _$stop, _$dropZone, _$fileName, _$audioPlayer, _$filters, _$equalizer;
 
     _init = function () {
@@ -59,18 +59,30 @@ var app = (function () {
         _equalizerNodes[4].connect(_equalizerNodes[5]);
         _equalizerNodes[5].connect(_gainNode);
 
-        /* onLoadAudioListener changes volume of the sound. */
+        _loadFile = function(file) {
+            var audio;
+
+            // Проверяем размер файла
+            if (file.size > maxFileSize) {
+                dropZone.text('Файл слишком большой!');
+                dropZone.addClass('error');
+                return false;
+            }
+
+            _$dropZone.removeClass('hover');
+            _$dropZone.addClass('drop');
+
+            _$fileName.text(file.name);
+
+            audio = URL.createObjectURL(file);
+
+            _loadSound(audio, _playSound);
+        };
 
         onLoadAudioListener = function () {
-            var a, file;
 
-            a = $(this);
+            _loadFile(this.files[0]);
 
-            _$fileName.text(a.files[0]);
-
-            file = URL.createObjectURL(a.files[0]);
-
-            _loadSound(file, _playSound);
         };
 
         /* onVolumeChangeListener changes volume of the sound. */
@@ -154,26 +166,12 @@ var app = (function () {
             // Теперь нам необходимо написать обработчик события «ondrop» — это событие когда перетянутый файл опустили. В некоторых браузерах при перетягивании файлов в окно браузера они автоматически открываются, что бы такого не произошло нам нужно отменить стандартное поведение браузера. Также нам необходимо убрать класс «hover», и добавить класс «drop».
             _$dropZone[0].ondrop = function (event) {
                 event.preventDefault();
-                _$dropZone.removeClass('hover');
-                _$dropZone.addClass('drop');
 
-                // Дальше нам нужно добавить проверку на размер файла, для этого добавим в обработчик «ondrop» следующий строчки кода:
-                var file = event.dataTransfer.files[0];
-
-                if (file.size > maxFileSize) {
-                    _$dropZone.text('Файл слишком большой!');
-                    _$dropZone.addClass('error');
-                    return false;
-                }
-
-                _$fileName.text(file.name);
-
-                file = URL.createObjectURL(file);
-
-                _loadSound(file, _playSound);
+                _loadFile(event.dataTransfer.files[0]);
             };
 
-            $('audio_file').on('change', onLoadAudioListener);
+            $('#audio_file').on('change', onLoadAudioListener);
+
             _$audioPlayer = audio_player; //$('#audio_player');
 
 

@@ -126,3 +126,8 @@ body{
     background: #5d00b3;
     box-shadow: 0 0 3px rgba(0,0,0,0.3) inset
 }
+
+.btn-info {
+    background-color: #7300df;
+    border-color: #6200bd;
+}
