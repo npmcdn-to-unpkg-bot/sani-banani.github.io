@@ -28,6 +28,9 @@
             text-align: left;
             padding-left:20px;
         }
+        table td:first-child{
+            padding-right:10px;
+        }
         table tr, table col {
             transition: all .3s;
             text-align: center;
@@ -36,7 +39,7 @@
         table tr td {
             padding:18px;
         }
-        td, th {
+        td {
             cursor: pointer;
         }
         tr:nth-child(2n) {
@@ -83,6 +86,20 @@
             padding: 5px;
             border: gray 1px dashed;
         }
+        .checkTo {
+            width:20px;
+            height:20px;
+            background: url('https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png') 100% 100% no-repeat;
+            background-size: contain;
+        }
+        .checkFrom {
+            width:20px;
+            height:20px;
+            background: url('https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png') 100% 100% no-repeat;
+            background-size: contain;
+        }
+
+
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script>
@@ -107,6 +124,22 @@
                 $('#info').css("display", "block");
             });
 
+            $('#check_to').click(function () {
+                if ($(this).attr('checked')) {
+                    $("td.checkTo").parent().show()
+                } else {
+                    $("td.checkTo").parent().hide()
+                }
+            });
+
+            $('#check_from').click(function () {
+                if ($(this).attr('checked')) {
+                    $("td.checkFrom").parent().show()
+                } else {
+                    $("td.checkFrom").parent().hide()
+                }
+            });
+
             $(window).scroll(function () {
                 /* 20 - отступ сверху */
                 if ($(document).scrollTop() > 20 + 72) {
@@ -115,7 +148,7 @@
                     $('#header_nav').css("display", "none");
                 }
                 $('#header_nav').stop().animate({
-                    height: '92px'
+                    height: '116px'
                 }, 600);
                 //$('#info').css("top", window.scrollY);
             });
@@ -137,34 +170,44 @@
     <label><input id="check_from" type="checkbox" checked="checked">Прилет</label>
 </div>
 <table>
-    <thead id="header_nav">
-    <tr>
-        <th>тип рейса</th>
-        <th>время вылета/прилёта</th>
-        <th>аэропорт назначения</th>
-        <th>номер рейса</th>
-        <th>статус рейса</th>
-        <th>авиакомпания (логотип)</th>
-        <th>тип воздушного судна</th>
-        <th>примечание</th>
-    </tr>
-    </thead>
     <thead>
-    <col/><col/><col/><col/><col/><col/><col/><col/>
-    <tr>
-        <th>тип рейса</th>
-        <th>время вылета/прилёта</th>
-        <th>аэропорт назначения</th>
-        <th>номер рейса</th>
-        <th>статус рейса</th>
-        <th>авиакомпания (логотип)</th>
-        <th>тип воздушного судна</th>
-        <th>примечание</th>
-    </tr>
+        <tr>
+            <th>тип рейса</th>
+            <th>время вылета/прилёта</th>
+            <th>аэропорт назначения</th>
+            <th>номер рейса</th>
+            <th>статус рейса</th>
+            <th>авиакомпания (логотип)</th>
+            <th>тип воздушного судна</th>
+            <th>примечание</th>
+        </tr>
+    </thead>
+    <thead id="header_nav">
+        <tr>
+            <th>тип рейса</th>
+            <th>время вылета/прилёта</th>
+            <th>аэропорт назначения</th>
+            <th>номер рейса</th>
+            <th>статус рейса</th>
+            <th>авиакомпания (логотип)</th>
+            <th>тип воздушного судна</th>
+            <th>примечание</th>
+        </tr>
     </thead>
     <tbody>
     <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
+        <td class="checkTo"></td>
+        <td>19:45</td>
+        <td>Майами</td>
+        <td>UN-666</td>
+        <td>Трансаэро</td>
+        <td>Идет регистрация...</td>
+        <td>Boeing-777</td>
+        <td/>
+    </tr>
+
+    <tr>
+        <td class="checkTo"></td>
         <td>17:45</td>
         <td>Пулково</td>
         <td>UN-666</td>
@@ -175,7 +218,7 @@
     </tr>
 
     <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
+        <td class="checkTo"></td>
         <td>17:45</td>
         <td>Пулково</td>
         <td>UN-666</td>
@@ -186,7 +229,17 @@
     </tr>
 
     <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
+        <td class="checkTo"></td>
+        <td>17:45</td>
+        <td>Пулково</td>
+        <td>UN-666</td>
+        <td>Трансаэро</td>
+        <td>Идет регистрация...</td>
+        <td>Boeing-777</td>
+        <td/>
+    </tr>
+    <tr>
+        <td class="checkTo"></td>
         <td>17:45</td>
         <td>Пулково</td>
         <td>UN-666</td>
@@ -197,17 +250,7 @@
     </tr>
 
     <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
-        <td>17:45</td>
-        <td>Пулково</td>
-        <td>UN-666</td>
-        <td>Трансаэро</td>
-        <td>Идет регистрация...</td>
-        <td>Boeing-777</td>
-        <td/>
-    </tr>
-    <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
+        <td class="checkTo"></td>
         <td>17:45</td>
         <td>Пулково</td>
         <td>UN-666</td>
@@ -218,7 +261,7 @@
     </tr>
 
     <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
+        <td class="checkFrom"></td>
         <td>17:45</td>
         <td>Пулково</td>
         <td>UN-666</td>
@@ -229,18 +272,7 @@
     </tr>
 
     <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
-        <td>17:45</td>
-        <td>Пулково</td>
-        <td>UN-666</td>
-        <td>Трансаэро</td>
-        <td>Идет регистрация...</td>
-        <td>Boeing-777</td>
-        <td/>
-    </tr>
-
-    <tr>
-        <td><img src="https://cdn1.iconfinder.com/data/icons/fly-airbus-and-aeroplane/154/fly-air-airbus-plane-aeroplane-512.png" style="width: 20px; height: 20px;"></td>
+        <td class="checkFrom"></td>
         <td>17:45</td>
         <td>Пулково</td>
         <td>UN-666</td>
