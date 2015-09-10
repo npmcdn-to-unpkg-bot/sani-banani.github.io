@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>File Upload</title>
+    <script type="application/javascript">
+
+        document.addEventListener('DOMContentLoaded', function(event) {
+            data = document.getElementById("fileData");
+
+            document.getElementById("demo2_fileElement").addEventListener("change", function(e){
+                var file = this.files ? this.files[0] : {
+                            name: this.value
+                        },
+                        fileReader = window.FileReader ? new FileReader() : null;
+
+                if (file){
+                    if (fileReader){
+                        fileReader.addEventListener("loadend", function(e){
+                            img.src = e.target.result;
+                        }, false);
+                        fileReader.readAsDataURL(file);
+                    } else {
+                        data.innerHTML = template.replace("{{Name}}", file.name).replace("{{Size}}", "Don't know").replace("{{Data}}", "This browser isn't smart enough!");
+                    }
+                }
+            }, false);
+        });
+
+    </script>
+</head>
+<body>
+<input id="demo2_fileElement" type="file">
+<br/>
+<div id="fileData"/>
+</body>
+</html>

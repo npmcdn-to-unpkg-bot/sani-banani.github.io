@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Любой аэропорт мира - Онлайн-табло</title>
+
+    <style type="text/css">
+
+        body {
+            font: 16px/1.5 Helvetica, Arial, sans-serif;
+        }
+        table {
+            overflow: hidden;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding:21px 25px 22px 25px;
+            background-color: #03C9A9;
+            border:whitesmoke 1px solid;
+        }
+        table th {
+            padding:21px 25px 22px 25px;
+            background-color: #03C9A9;
+            border:whitesmoke 1px solid;
+        }
+        table th:first-child{
+            text-align: left;
+            padding-left:20px;
+        }
+        table td:first-child{
+            padding-right:10px;
+        }
+        table tr, table col {
+            transition: all .3s;
+            text-align: center;
+            padding-left:20px;
+        }
+        table tr td {
+            padding:18px;
+        }
+        td {
+            cursor: pointer;
+        }
+
+        tr:hover {
+            background-color: rgba(232, 255, 177, 0.8);
+        }
+        /*
+        tr:nth-child(2n) {
+          background-color: whitesmoke;
+        }
+        */
+        td, th {
+            position: relative;
+        }
+
+        td:hover::after {
+            content: "";
+            position: absolute;
+            background-color: rgba(232, 255, 177, 0.8);
+            left: 0;
+            top: -5000px;
+            height: 10000px;
+            width: 100%;
+            z-index: -1;
+        }
+
+
+        #header_nav {
+            display: none;
+            width:calc(100% - 16px);
+            height:100px;
+            position:fixed;
+            top:0;
+            left:8px;
+        }
+
+        #info {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            background-color: floralwhite;
+            width: 400px;
+            left: 50%;
+            padding-left: 20px;
+            margin-left: -200px;
+            margin-top:100px;
+            border: gray 1px solid;
+            border-radius:5px;
+        }
+
+        #checks {
+            background-color: white;
+            border: white 1px solid;
+            width: 300px;
+            padding: 20px;
+        }
+        label {
+            margin-right: 20px;
+            cursor: pointer;
+            padding: 5px;
+            border: gray 1px dashed;
+        }
+
+        tr.checkTo::after td:first-child {
+            content: 'Вылет';
+        }
+        tr.checkFrom::after td:first-child {
+            content: 'Прилет';
+        }
+        .checkTo, .checkFrom {
+            display: none;
+        }
+        #check_to:checked ~ * tr.checkTo,  #check_from:checked ~ * tr.checkFrom {
+            display: table-row;
+        }
+
+        #info {
+            display: none;
+            background: #B5B5B5;
+        }
+        tr:active {
+            background-color:#AAAAAA;
+        }
+
+        .full_sudno {
+            display: block;
+        }
+        .short_sudno {
+            display: none;
+        }
+        @media screen and (max-width: 800px) {
+            .full_sudno {
+                display: none;
+            }
+            .short_sudno {
+                display: block;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <input id="check_to" type="checkbox" checked="checked">
+    <label for="check_to">Вылет</label>
+    <input id="check_from" type="checkbox" checked="checked">
+    <label for="check_from">Прилет</label>
+
+<table>
+    <thead>
+    <tr>
+        <th>тип рейса</th>
+        <th>время вылета/прилёта</th>
+        <th>аэропорт назначения</th>
+        <th>номер рейса</th>
+        <th>статус рейса</th>
+        <th>авиакомпания (логотип)</th>
+        <th>тип воздушного судна</th>
+        <th>примечание</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="checkFrom">
+        <td></td>
+        <td>19:45</td>
+        <td>Майами</td>
+        <td>UN-666</td>
+        <td>Трансаэро</td>
+        <td>Идет регистрация...</td>
+        <td>
+            <span class="full_sudno">Boeing 737-800</span>
+            <span class="short_sudno">B737</span>
+        </td>
+        <td/>
+    </tr>
+
+    <tr class="checkTo">
+        <td></td>
+        <td>17:45</td>
+        <td>Пулково</td>
+        <td>UN-666</td>
+        <td>Трансаэро</td>
+        <td>Идет регистрация...</td>
+        <td>
+            <span class="full_sudno">Boeing 737-800</span>
+            <span class="short_sudno">B737</span>
+        </td>
+        <td/>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
