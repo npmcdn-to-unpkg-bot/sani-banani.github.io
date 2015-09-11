@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>File Upload</title>
+    <script type="application/javascript">
+
+        function getRandomInt(min, max)
+        {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        document.addEventListener('DOMContentLoaded', function(event) {
+            var count = 0,
+                data = document.getElementById("demo2").innerText,
+                setNumber = function() {
+                    if (count < 10) {
+                        document.getElementById("demo2").innerText = getRandomInt(10, data);
+                        count++;
+                    } else {
+                        clearInterval(intervalId);
+                        document.getElementById("demo2").innerText = data;
+                    }
+                },
+                intervalId = setInterval(setNumber, 100);
+
+        });
+
+    </script>
+</head>
+<body>
+<h1 id="demo2">15</h1>
+<br/>
+<div id="fileData"/>
+</body>
+</html>
