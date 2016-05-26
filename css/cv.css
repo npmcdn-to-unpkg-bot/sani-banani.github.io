@@ -27,6 +27,7 @@
 }
 
 h1 {
-    font-family: "Montserrat", "Nunito", serif;
-    font-weight: 400;
+    font-family: "Nunito", serif;
+    font-weight: 300;
+    /*font-variant: small-caps;*/
 }
