@@ -48,14 +48,14 @@ d3.json("main_bubble.json", function(error, root) {
             .attr("y", "0%")
             .attr("height", "100%")
             .attr("width", "100%")
-            .attr("viewBox", "0 0 512 512")
+            .attr("viewBox", "0 0 200 200")
         .append("image")
             //.attr("xlink:href", "https://cdn3.iconfinder.com/data/icons/people-professions/512/Baby-512.png")
-            .attr("xlink:href", "http://freedesignfile.com/upload/2016/01/Long-beard-hipster-head-portrait-vector-set-04.jpg")
+            .attr("xlink:href", function(d,i) {return "images/" + d.image;})
             .attr("x", "0%")
             .attr("y", "0%")
-            .attr("height", 512)
-            .attr("width", 512);
+            .attr("height", 200)
+            .attr("width", 200);
 
 
 
