@@ -17,5 +17,16 @@
 #mainBubble circle.topBubble {
     fill: #aaa;
     stroke: #666;
-    stroke-width: 1.5px;
+    stroke-width: 0.5px;
+}
+
+#mainBubble svg #bubbleItemNote {
+    font-family: "Nunito";
+    font-size: 14px;
+    font-weight: 300;
+}
+
+h1 {
+    font-family: "Montserrat", "Nunito", serif;
+    font-weight: 400;
 }

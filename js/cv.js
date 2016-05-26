@@ -16,10 +16,9 @@ var mainNote = svg.append("text")
     .attr("id", "bubbleItemNote")
     .attr("x", 10)
     .attr("y", w/2-15)
-    .attr("font-size", 12)
     .attr("dominant-baseline", "middle")
     .attr("alignment-baseline", "middle")
-    .style("fill", "#888888")
+    //.style("fill", "#888888")
     .text(function(d) {return "CV / Alexander Konovalov";});
 
 
@@ -69,7 +68,6 @@ d3.json("main_bubble.json", function(error, root) {
         .style("fill", function(d, i) { return "url(#image" + i + ")"; }) // #1f77b4
         //.style("fill", function(d,i) { return colVals(i); }) // #1f77b4
         //.style("opacity",0.3)
-        .style("stroke","gray")
         .on("mouseover", function(d,i) {return activateBubble(d,i);});
 
 
