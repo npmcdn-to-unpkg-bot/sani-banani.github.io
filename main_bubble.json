@@ -1,30 +1,30 @@
 {"name":"bubble", "children": [
-  {"name":"Lead Developer","description":"Atlas of Global Agriculture",
+  {"name":"2016","description":"Atlas of Global Agriculture",
     "children":[
       {"name": "Angular JS","address":"http://gli.environment.umn.edu", "note":"Global crop geography, including precipitation, temperature, crop area, etc."},
       {"name": "Node JS","address":"http://d3js.org"},
       {"name": "CSS","address":"http://environment.umn.edu", "note":"Maize, wheat, rice, and soybean yields in 2000"}
     ]},
-  {"name": "Lead Developer", "description": "Virtual Lab of Global Agriculture",
+  {"name": "2014", "description": "Virtual Lab of Global Agriculture",
     "children":[
       {"name":"Excess Nutrient","address":"http://d3js.org","note":"Prototype Infographics on Excess Fertilizer Nutrients"},
       {"name":"Yield Gap","address":"http://d3js.org", "note":"The gap between attainable yields and actual yields, with modeled yields assuming the percentage of gap closed."},
       {"name":"Fertilizer","address":"http://sunsp.net"}
     ]},
-  {"name":"Developer", "description":"Profiles of Country",
+  {"name":"2013", "description":"Profiles of Country",
     "children":[
       {"name":"Efficiency","address":"http://d3js.org"},
       {"name":"Excess Nutrient","address":"http://d3js.org"},
       {"name":"Economy","address":"http://d3js.org"},
       {"name":"Agriculture","address":"http://uis.edu/ens"}
     ]},
-  {"name":"Master", "description":"Crop Data in 5 minutes grid",
+  {"name":"2012", "description":"Crop Data in 5 minutes grid",
     "children":[
       {"name":"Geography","address":"http://www.earthstat.org/"},
       {"name":"Crop Land","address":"http://www.earthstat.org/"},
       {"name":"Crop Yields","address":"http://www.earthstat.org/"}
     ]},
-  {"name":"Specialist", "description":"Crop Data in 5 minutes grid",
+  {"name":"2010", "description":"Crop Data in 5 minutes grid",
     "children":[
       {"name":"Geography","address":"http://www.earthstat.org/"},
       {"name":"Crop Land","address":"http://www.earthstat.org/"},
