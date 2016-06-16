@@ -75,6 +75,7 @@ header .header-limiter ul li a:target {
 header .header-limiter a {
     color: #ffffff;
     text-decoration: none;
+    font-family: Montserrat;
 }
 
 header .header-limiter nav{
@@ -195,6 +196,14 @@ header .header-limiter nav a.selected {
     text-align: center;
     margin-bottom: 40px;
 }
+
+.card .card-description .infoNumbers{
+    font-family: Avenir;
+    font-size: x-large;
+}
+
+
+
 
 
 /*--------------------
