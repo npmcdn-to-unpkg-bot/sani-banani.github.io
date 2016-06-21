@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style>
+        html{
+            height: 100%;
+            margin: 15px;
+        }
+        body, textarea, button{
+            font: 14px/1 "Helvetica Neue", "Helvetica", Helvetica,Arial, sans-serif; /* example */
+        }
+        textarea {
+            width: calc(100% - 30px);
+            margin-bottom: 10px;
+            background-color: #fff;
+            height: 100%;
+            min-height: 150px;
+            padding: 15px;
+        }
+        button {
+            height: 40px;
+            width: 150px;
+            background-color: rgba(54, 137, 204, 0.7);
+            border: 0;
+        }
+        button:active {
+            background-color: rgba(54, 137, 204, 0.2);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text to paragraph</h1>
+
+    <textarea id="my-text">Alfred Aho likes to code</textarea>
+    <button onclick="getResult()">Split to paragraph!</button>
+    <p id="result-time"></p>
+    <textarea id="result"></textarea>
+
+    <script>
+        function splitToParagraph(str, constraint) {
+            var arr = str.split(' '), result = [];
+            for (var i = 0, j = 0; i < arr.length; i++, j++) {
+                result[j] = arr[i];
+                while ((result[j] + ' ' + arr[i+1]).length < constraint) {
+                    result[j] += ' ' + arr[i+1] ;
+                    i++;
+                }
+            }
+            return result.join('\n');
+        }
+        // for function testing
+        function getResult() {
+            if (document.getElementById('my-text').value) {
+                var start = new Date;
+                document.getElementById('result').value = splitToParagraph(document.getElementById('my-text').value,10);
+                document.getElementById('result-time').innerText = "Result time: " + (new Date - start) + " ms";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", getResult);
+    </script>
+</body>
+</html>
